@@ -11,10 +11,10 @@ use sdl2::rect::Rect;
 use rand::Rng;
 
 const TILE_SIZE: u32 = 32;
-const ROOM_WIDTH: u32 = 512;
-const ROOM_HEIGHT: u32 = 352;
-const MAP_WIDTH: usize = 16;
-const MAP_HEIGHT: usize = 11;
+const ROOM_WIDTH: u32 = 640;
+const ROOM_HEIGHT: u32 = 320;
+const WIDTH_IN_TILES: u32 = ROOM_WIDTH / TILE_SIZE;
+const HEIGHT_IN_TILES: u32 = ROOM_HEIGHT / TILE_SIZE;
 /*
 fn room_creation() -> Vec<RoomData>{ //make a vector containing ALL of the rooms lol...
     //LATER WILL IMPLEMENT FILE IO TO CHECK A TXT FILE.
@@ -119,18 +119,18 @@ impl GameRunner {
 */
 /* TODO: delete all this code from before lol */
 pub fn run() -> Result <(), String> {
-/*
     let mut going = true;
     let sdl_context = sdl2::init()?;
     let video_subsystem = sdl_context.video()?;
     let window = video_subsystem
-        .window("Rusty Zelda", ROOM_WIDTH, ROOM_HEIGHT) //might need to change this l8er
+        .window("Fox Boxes", ROOM_WIDTH, ROOM_HEIGHT) //might need to change this l8er
         .position_centered()
         .build()
         .map_err(|e| e.to_string())?;
     let mut canvas = window.into_canvas().build().map_err(|e| e.to_string())?;
     let mut event_pump = sdl_context.event_pump()?;
 
+    /*
     let mut a = room_creation().into_iter();
 
     let fel = Felix::new(TILE_SIZE/2, (256.0, 272.0)); //hi fel
@@ -139,6 +139,7 @@ pub fn run() -> Result <(), String> {
     if let Some(n) = a.next() {cursor.add_west(n);} //i feel like we need a better way to do this
     if let Some(n) = a.next() {cursor.add_east(n);}
     let mut player = GameRunner::new(fel, cursor);
+    */
    
     'running: loop{
         for event in event_pump.poll_iter(){
@@ -151,6 +152,19 @@ pub fn run() -> Result <(), String> {
                 _ => {}
             }
         }
+
+        // Set the background
+        canvas.set_draw_color(Color::RGB(0x4f, 0x77, 0x2d));
+        canvas.clear();
+
+        // Draw a red rectangle
+        canvas.set_draw_color(Color::RGB(0xf5, 0xd9, 0x02));
+        canvas.fill_rect(Rect::new(TILE_SIZE as i32, TILE_SIZE as i32, ROOM_WIDTH - 2 * TILE_SIZE, ROOM_HEIGHT - 2 * TILE_SIZE))?;
+
+        // Show it on the screen
+        canvas.present();
+        
+    /*
 	//check if felix DIED like a dog
 	if player.felix.health_bar <= 0 { break 'running;}
 
@@ -198,8 +212,8 @@ pub fn run() -> Result <(), String> {
 	
         canvas.set_draw_color(Color::RGB(0,0,0)); //draws room
         canvas.clear();
-        for y in 0..MAP_HEIGHT{
-            for x in 0..MAP_WIDTH{
+        for y in 0..HEIGHT_IN_TILES{
+            for x in 0..WIDTH_IN_TILES{
                 let two_room_dungeon;
                 match player.world.get_curr(){
                     RoomData::Shop(shop) => two_room_dungeon = &shop.dungeon,
@@ -248,8 +262,8 @@ pub fn run() -> Result <(), String> {
 	}
         canvas.present();
         std::thread::sleep(Duration::from_millis(16));
+    */
     }
-    Ok(())
-*/
+
 	Ok(())
 }

@@ -11,7 +11,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 struct Map {
-    hitboxes: Vec<Vec<String>>,
+    hitboxes: Vec<Vec<Char>>,
     tileset: String,
     rounds: u8,
 }

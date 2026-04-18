@@ -15,3 +15,9 @@ struct Map {
     tileset: String,
     rounds: u8,
 }
+
+fn load_map(f: String) {
+    let contents = fs::read_to_string("f").unwrap();
+    let data: Map = serde_json::from_str(&contents).unwrap();
+    println!("{:?}", data);
+}
